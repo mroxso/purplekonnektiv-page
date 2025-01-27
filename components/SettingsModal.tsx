@@ -13,33 +13,41 @@ export default function SettingsModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Open Settings</Button>
+        <Button variant="outline" className="dark:text-white dark:hover:text-purple-300">
+          Open Settings
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] dark:bg-gray-800">
         <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
+          <DialogTitle className="dark:text-white">Settings</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-medium">Relays</h3>
-            <p>Relay information and subscription options go here...</p>
+            <h3 className="text-lg font-medium dark:text-white">Relays</h3>
+            <p className="dark:text-gray-300">Relay information and subscription options go here...</p>
           </div>
           <div>
-            <h3 className="text-lg font-medium">Language</h3>
+            <h3 className="text-lg font-medium dark:text-white">Language</h3>
             <RadioGroup value={language} onValueChange={setLanguage}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="en" id="en" />
-                <Label htmlFor="en">English</Label>
+                <Label htmlFor="en" className="dark:text-gray-300">
+                  English
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="de" id="de" />
-                <Label htmlFor="de">Deutsch</Label>
+                <Label htmlFor="de" className="dark:text-gray-300">
+                  Deutsch
+                </Label>
               </div>
             </RadioGroup>
           </div>
           <div className="flex items-center space-x-2">
             <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">Subscribe to PurpleKonnektiv Relay</Label>
+            <Label htmlFor="airplane-mode" className="dark:text-gray-300">
+              Subscribe to PurpleKonnektiv Relay
+            </Label>
           </div>
         </div>
       </DialogContent>

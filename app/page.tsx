@@ -6,17 +6,19 @@ export default function HomePage() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <section>
-        <h2 className="text-2xl font-bold mb-4">Upcoming Events</h2>
+        <h2 className="text-2xl font-bold mb-4 dark:text-white">Upcoming Events</h2>
         <div className="space-y-4">
           {[1, 2, 3].map((event) => (
-            <Card key={event}>
+            <Card key={event} className="dark:bg-gray-800">
               <CardHeader>
-                <CardTitle>Event {event}</CardTitle>
+                <CardTitle className="dark:text-white">Event {event}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Event details go here...</p>
+                <p className="dark:text-gray-300">Event details go here...</p>
                 <Link href={`/calendar/${event}`}>
-                  <Button variant="link">View Details</Button>
+                  <Button variant="link" className="dark:text-purple-300">
+                    View Details
+                  </Button>
                 </Link>
               </CardContent>
             </Card>
@@ -27,17 +29,19 @@ export default function HomePage() {
         </Link>
       </section>
       <section>
-        <h2 className="text-2xl font-bold mb-4">Groups</h2>
+        <h2 className="text-2xl font-bold mb-4 dark:text-white">Groups</h2>
         <div className="space-y-4">
           {[1, 2, 3].map((group) => (
-            <Card key={group}>
+            <Card key={group} className="dark:bg-gray-800">
               <CardHeader>
-                <CardTitle>Group {group}</CardTitle>
+                <CardTitle className="dark:text-white">Group {group}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Group description goes here...</p>
+                <p className="dark:text-gray-300">Group description goes here...</p>
                 <Link href={`/group/${group}`}>
-                  <Button variant="link">View Group</Button>
+                  <Button variant="link" className="dark:text-purple-300">
+                    View Group
+                  </Button>
                 </Link>
               </CardContent>
             </Card>
