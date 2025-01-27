@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google"
-import "./globals.css"
-import Header from "../components/Header"
+import "@/app/globals.css"
+import Header from "@/components/Header"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -10,11 +10,7 @@ export const metadata = {
   description: "Connect and organize with PurpleKonnektiv",
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function ProfilePage() {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -25,10 +21,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="container mx-auto p-4">{children}</main>
+          <main className="container mx-auto p-4">
+            {/* Hier kommt der Profilseiteninhalt */}
+            <h1>Profilseite</h1>
+          </main>
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
