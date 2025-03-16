@@ -1,13 +1,19 @@
 "use client"
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Event as NostrEvent } from "nostr-tools"
+import { nip19, Event as NostrEvent } from "nostr-tools"
 import { useProfile } from "nostr-react"
 import { useState, useEffect } from "react"
 
 export function PostCard({ post }: { post: NostrEvent }) {
+  // Format pubkey to show only first 4 and last 4 characters
+  const formatPubkey = (pubkey: string) => {
+    const npub = nip19.npubEncode(pubkey);
+    if (npub.length <= 8) return npub;
+    return `${npub.slice(0, 8)}...${npub.slice(-4)}`;
+  }
 
-  const [username, setUsername] = useState(post.pubkey)
+  const [username, setUsername] = useState(formatPubkey(post.pubkey))
 
   const { data: userData } = useProfile({
     pubkey: post.pubkey,
