@@ -16,8 +16,8 @@ export function PostCard({ post }: { post: NostrEvent }) {
   });
 
   useEffect(() => {
-    if (userData && userData.username) {
-      setUsername(userData.username)
+    if (userData && userData.name) {
+      setUsername(userData.name)
     }
   }, [userData])
 
