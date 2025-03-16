@@ -1,6 +1,12 @@
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Feed } from "@/components/Feed"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Purple Konnektiv | Home",
+  description: "Welcome to Purple Konnektiv - Connect with the community through Nostr",
+}
 
 export default function Home() {
   return (

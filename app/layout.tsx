@@ -5,6 +5,7 @@ import "@/app/globals.css"
 import Header from "@/components/Header"
 import { ThemeProvider } from "@/components/theme-provider"
 import { NostrProvider } from "nostr-react";
+import Head from "next/head";
 
 const relayUrls = [
   "wss://relay.damus.io",
@@ -20,6 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Purple Konnektiv</title>
+        <meta name="description" content="Purple Konnektiv - Connect with the community through Nostr" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
