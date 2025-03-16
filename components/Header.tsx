@@ -31,7 +31,7 @@ export default function Header() {
           >
             {mounted && (theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />)}
           </Button>
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="text-white hover:text-purple-200">
                 <Menu className="h-6 w-6" />
@@ -56,7 +56,7 @@ export default function Header() {
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </nav>
       </div>
     </header>
