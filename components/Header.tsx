@@ -3,11 +3,18 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Settings, User, Menu } from "lucide-react"
+import { Settings, User, Menu, Sun, Moon } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 export default function Header() {
   const { setTheme, theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  
+  // Prevent hydration mismatch by only showing theme toggle after mount
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <header className="bg-purple-700 dark:bg-purple-900 text-white p-4">
@@ -22,7 +29,7 @@ export default function Header() {
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="text-white hover:text-purple-200"
           >
-            {theme === "dark" ? "🌞" : "🌙"}
+            {mounted && (theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />)}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
