@@ -1,8 +1,6 @@
 "use client"
 
-import { Share } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Event as NostrEvent } from "nostr-tools"
 import { useProfile } from "nostr-react"
 import { useState, useEffect } from "react"
