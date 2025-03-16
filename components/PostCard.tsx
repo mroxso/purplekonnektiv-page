@@ -13,6 +13,19 @@ export function PostCard({ post }: { post: NostrEvent }) {
     return `${npub.slice(0, 8)}...${npub.slice(-4)}`;
   }
 
+  // Format timestamp to local date time without seconds
+  const formatTimestamp = (timestamp: number) => {
+    const date = new Date(timestamp * 1000);
+    return date.toLocaleString(undefined, { 
+      year: 'numeric', 
+      month: 'numeric', 
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    });
+  }
+
   const [username, setUsername] = useState(formatPubkey(post.pubkey))
 
   const { data: userData } = useProfile({
@@ -36,7 +49,7 @@ export function PostCard({ post }: { post: NostrEvent }) {
           <div className="flex items-center">
             <span className="font-semibold">{username}</span>
           </div>
-          <span className="text-xs text-muted-foreground">{post.created_at}</span>
+          <span className="text-xs text-muted-foreground">{formatTimestamp(post.created_at)}</span>
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0 whitespace-pre-wrap">
