@@ -10,7 +10,7 @@ export default function Home() {
         <Card className="col-span-1 lg:col-span-2">
           <CardHeader>
             <CardTitle>Social Feed</CardTitle>
-            <CardDescription>Check out the latest posts from your network</CardDescription>
+            <CardDescription>Check out the latest posts on nostr</CardDescription>
           </CardHeader>
           <CardContent>
             <Feed />
@@ -21,7 +21,7 @@ export default function Home() {
         <Card className="col-span-1">
           <CardHeader>
             <CardTitle>Calendar</CardTitle>
-            <CardDescription>Your upcoming events and schedule</CardDescription>
+            <CardDescription>Upcoming events and schedule</CardDescription>
           </CardHeader>
           <CardContent>
             <Calendar mode="single" className="rounded-md border" />
