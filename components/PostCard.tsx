@@ -1,8 +1,6 @@
 "use client"
 
-import Image from "next/image"
-import { Heart, MessageCircle, Repeat2, Share } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Share } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Event as NostrEvent } from "nostr-tools"

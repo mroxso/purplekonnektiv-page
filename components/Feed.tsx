@@ -1,14 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNostrEvents } from "nostr-react"
 import { PostCard } from "@/components/PostCard"
 
 export function Feed() {
-  const [activeTab, setActiveTab] = useState("all")
-
-  const { events, isLoading } = useNostrEvents({
+  const { events } = useNostrEvents({
     filter: {
       kinds: [1,20],
       "#t": ["PurpleKonnektiv"]
