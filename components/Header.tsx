@@ -2,8 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Settings, User, Menu, Sun, Moon } from "lucide-react"
+import { Sun, Moon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 

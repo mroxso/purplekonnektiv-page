@@ -5,7 +5,6 @@ import "@/app/globals.css"
 import Header from "@/components/Header"
 import { ThemeProvider } from "@/components/theme-provider"
 import { NostrProvider } from "nostr-react";
-import Head from "next/head";
 
 const relayUrls = [
   "wss://relay.damus.io",
