@@ -5,6 +5,7 @@ import { nip19, Event as NostrEvent } from "nostr-tools"
 import { useProfile } from "nostr-react"
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import { getImageUrlFromKind20Event } from "@/lib/utils"
 
 export function PostCard({ post }: { post: NostrEvent }) {
   // Format pubkey to show only first 4 and last 4 characters
@@ -104,17 +105,16 @@ export function PostCard({ post }: { post: NostrEvent }) {
           </div>
         )}
         
-        {/* {(post.kind === 20) && (
+        {(post.kind === 20) && (
           <div className="relative rounded-lg overflow-hidden mb-4">
             <Image
-              src={post.content || "/placeholder.svg"}
+              src={getImageUrlFromKind20Event(post.tags)}
               alt="Post image"
-              width={600}
-              height={400}
+              fill
               className="w-full object-cover rounded-lg"
             />
           </div>
-        )} */}
+        )}
       </CardContent>
       {/* <CardFooter className="p-4 pt-0 flex justify-between">
         <Button variant="ghost" size="sm" className="flex items-center gap-1">
