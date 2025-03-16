@@ -7,6 +7,7 @@ export function Feed() {
   const { events } = useNostrEvents({
     filter: {
       kinds: [1,20],
+      limit: 20,
       "#t": ["PurpleKonnektiv", "purplekonnektiv"]
     },
   });
