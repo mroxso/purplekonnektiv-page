@@ -16,7 +16,7 @@ export function SocialFeed() {
   const { events, isLoading } = useNostrEvents({
     filter: {
       kinds: [1,20],
-      limit: 20,
+      "#t": ["PurpleKonnektiv"]
     },
   });
   
@@ -44,8 +44,12 @@ function SocialPost({ post }: { post: NostrEvent }) {
           <span className="text-xs text-muted-foreground">{post.created_at}</span>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-0">
-        {post.content && <p className="mb-4">{post.content}</p>}
+      <CardContent className="p-4 pt-0 whitespace-pre-wrap">
+        {post.content && (
+          <p className="mb-4 break-words">
+            {post.content}
+          </p>
+        )}
         {/* {(post.kind === 20) && (
           <div className="relative rounded-lg overflow-hidden mb-4">
             <Image
