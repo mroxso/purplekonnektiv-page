@@ -4,8 +4,23 @@ import { Share } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Event as NostrEvent } from "nostr-tools"
+import { useProfile } from "nostr-react"
+import { useState, useEffect } from "react"
 
 export function PostCard({ post }: { post: NostrEvent }) {
+
+  const [username, setUsername] = useState(post.pubkey)
+
+  const { data: userData } = useProfile({
+    pubkey: post.pubkey,
+  });
+
+  useEffect(() => {
+    if (userData && userData.username) {
+      setUsername(userData.username)
+    }
+  }, [userData])
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-start gap-4 p-4">
@@ -15,7 +30,7 @@ export function PostCard({ post }: { post: NostrEvent }) {
         </Avatar> */}
         <div className="flex flex-col">
           <div className="flex items-center">
-            <span className="font-semibold">{post.pubkey}</span>
+            <span className="font-semibold">{username}</span>
           </div>
           <span className="text-xs text-muted-foreground">{post.created_at}</span>
         </div>
