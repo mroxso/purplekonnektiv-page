@@ -53,8 +53,8 @@ export function PostCard({ post }: { post: NostrEvent }) {
           </div>
         )} */}
       </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between">
-        {/* <Button variant="ghost" size="sm" className="flex items-center gap-1">
+      {/* <CardFooter className="p-4 pt-0 flex justify-between">
+        <Button variant="ghost" size="sm" className="flex items-center gap-1">
           <Heart className="h-4 w-4" />
           <span>{post.likes}</span>
         </Button>
@@ -65,11 +65,11 @@ export function PostCard({ post }: { post: NostrEvent }) {
         <Button variant="ghost" size="sm" className="flex items-center gap-1">
           <Repeat2 className="h-4 w-4" />
           <span>{post.shares}</span>
-        </Button> */}
+        </Button>
         <Button variant="ghost" size="sm">
           <Share className="h-4 w-4" />
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
