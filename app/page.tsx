@@ -30,7 +30,7 @@ export default function Home() {
             <CardDescription>Upcoming events and schedule</CardDescription>
           </CardHeader>
           <CardContent>
-            <Calendar mode="single" className="rounded-md border" />
+            {/* <Calendar mode="single" className="rounded-md border" /> */}
           </CardContent>
         </Card>
       </div>
