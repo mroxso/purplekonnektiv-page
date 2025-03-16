@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { nip19, Event as NostrEvent } from "nostr-tools"
 import { useProfile } from "nostr-react"
 import { useState, useEffect } from "react"
+import Image from "next/image"
 
 export function PostCard({ post }: { post: NostrEvent }) {
   // Format pubkey to show only first 4 and last 4 characters
@@ -26,7 +27,25 @@ export function PostCard({ post }: { post: NostrEvent }) {
     });
   }
 
+  // Extract image URLs from post content
+  const extractImageUrls = (content: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp))/gi;
+    return content.match(urlRegex) || [];
+  }
+  
+  // Remove image URLs from the displayed content
+  const removeImageUrls = (content: string, imageUrls: string[]) => {
+    let cleanContent = content;
+    imageUrls.forEach(url => {
+      cleanContent = cleanContent.replace(url, '');
+    });
+    // Clean up any extra whitespace or multiple line breaks
+    return cleanContent.replace(/(\n\s*\n\s*\n)+/g, '\n\n').trim();
+  }
+
   const [username, setUsername] = useState(formatPubkey(post.pubkey))
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [displayContent, setDisplayContent] = useState(post.content)
 
   const { data: userData } = useProfile({
     pubkey: post.pubkey,
@@ -37,6 +56,16 @@ export function PostCard({ post }: { post: NostrEvent }) {
       setUsername(userData.name)
     }
   }, [userData])
+
+  useEffect(() => {
+    if (post.content && post.kind === 1) {
+      const urls = extractImageUrls(post.content);
+      setImageUrls(urls);
+      setDisplayContent(removeImageUrls(post.content, urls));
+    } else {
+      setDisplayContent(post.content);
+    }
+  }, [post.content, post.kind])
 
   return (
     <Card>
@@ -53,11 +82,28 @@ export function PostCard({ post }: { post: NostrEvent }) {
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0 whitespace-pre-wrap">
-        {post.content && (
+        {displayContent && displayContent.trim() !== '' && (
           <p className="mb-4 break-words">
-            {post.content}
+            {displayContent}
           </p>
         )}
+        
+        {imageUrls.length > 0 && (
+          <div className={`grid gap-2 ${imageUrls.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} mb-4`}>
+            {imageUrls.map((url, index) => (
+              <div key={index} className="relative rounded-lg overflow-hidden aspect-video">
+                <Image
+                  src={url}
+                  alt="Post image"
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes="(max-width: 768px) 100vw, 600px"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+        
         {/* {(post.kind === 20) && (
           <div className="relative rounded-lg overflow-hidden mb-4">
             <Image
