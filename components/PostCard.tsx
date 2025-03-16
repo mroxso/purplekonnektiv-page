@@ -1,35 +1,13 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import { Heart, MessageCircle, Repeat2, Share } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useNostrEvents } from "nostr-react"
 import { Event as NostrEvent } from "nostr-tools"
 
-export function SocialFeed() {
-  const [activeTab, setActiveTab] = useState("all")
-
-  const { events, isLoading } = useNostrEvents({
-    filter: {
-      kinds: [1,20],
-      "#t": ["PurpleKonnektiv"]
-    },
-  });
-  
-  return (
-    <div className="space-y-4">
-      {events.map((post) => (
-        <SocialPost key={post.id} post={post} />
-      ))}
-    </div>
-  )
-}
-
-function SocialPost({ post }: { post: NostrEvent }) {
+export function PostCard({ post }: { post: NostrEvent }) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-start gap-4 p-4">

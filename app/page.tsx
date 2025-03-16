@@ -1,6 +1,6 @@
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { SocialFeed } from "@/components/social-feed"
+import { Feed } from "@/components/Feed"
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
             <CardDescription>Check out the latest posts from your network</CardDescription>
           </CardHeader>
           <CardContent>
-            <SocialFeed />
+            <Feed />
           </CardContent>
         </Card>
 
