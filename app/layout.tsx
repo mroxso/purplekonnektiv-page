@@ -1,14 +1,17 @@
+'use client';
+
 import { Inter } from "next/font/google"
 import "@/app/globals.css"
 import Header from "@/components/Header"
 import { ThemeProvider } from "@/components/theme-provider"
+import { NostrProvider } from "nostr-react";
+
+const relayUrls = [
+  "wss://relay.damus.io",
+  "wss://relay.nostr.band",
+];
 
 const inter = Inter({ subsets: ["latin"] })
-
-export const metadata = {
-  title: "PurpleKonnektiv",
-  description: "Connect and organize with PurpleKonnektiv",
-}
 
 export default function RootLayout({
   children,
@@ -25,7 +28,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="container mx-auto p-4">{children}</main>
+          <main className="container mx-auto p-4">
+            <NostrProvider relayUrls={relayUrls} debug={true}>
+              {children}
+            </NostrProvider>
+          </main>
         </ThemeProvider>
       </body>
     </html>
