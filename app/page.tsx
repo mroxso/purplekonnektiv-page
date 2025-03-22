@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Feed } from "@/components/Feed"
 import { Metadata } from "next"
+import { CombinedFeed } from "@/components/CombinedFeed"
+import { CalendarFeed } from "@/components/CalendarFeed"
 
 export const metadata: Metadata = {
   title: "Purple Konnektiv | Home",
@@ -19,6 +21,7 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             {/* <Calendar mode="single" className="rounded-md border" /> */}
+            <CalendarFeed />
           </CardContent>
         </Card>
 
