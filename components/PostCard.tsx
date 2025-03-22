@@ -6,6 +6,7 @@ import { useProfile } from "nostr-react"
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { getImageUrlFromKind20Event } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 export function PostCard({ post }: { post: NostrEvent }) {
   // Format pubkey to show only first 4 and last 4 characters
@@ -70,19 +71,18 @@ export function PostCard({ post }: { post: NostrEvent }) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-start gap-4 p-4">
-        {/* <Avatar>
-          <AvatarImage src={post.author.avatar} alt={post.author.name} />
-          <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-        </Avatar> */}
-        <div className="flex flex-col">
-          <div className="flex items-center">
-            <span className="font-semibold">{username}</span>
+      <CardHeader className="bg-purple-100 dark:bg-purple-900/30 p-4">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="text-lg font-semibold">{username}</h3>
+            <p className="text-sm text-muted-foreground">{formatTimestamp(post.created_at)}</p>
           </div>
-          <span className="text-xs text-muted-foreground">{formatTimestamp(post.created_at)}</span>
+          <Badge variant="outline" className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200">
+            {post.kind === 1 ? 'Note' : post.kind === 20 ? 'Media' : `Kind ${post.kind}`}
+          </Badge>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-0 whitespace-pre-wrap">
+      <CardContent className="p-4 whitespace-pre-wrap">
         {displayContent && displayContent.trim() !== '' && (
           <p className="mb-4 break-words">
             {displayContent}
