@@ -3,14 +3,19 @@
 import { useNostrEvents } from "nostr-react"
 import { CalendarEvent } from "@/components/CalendarEvent"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState, useMemo } from "react"
+import { Badge } from "@/components/ui/badge"
+import { X } from "lucide-react"
 
 export function CalendarFeed() {
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
   // Load date-based calendar events (kind 31922)
   const { events: dateEvents } = useNostrEvents({
     filter: {
       kinds: [31922],
       limit: 20,
-    //   "#t": ["PurpleKonnektiv", "purplekonnektiv"]
+      "#t": ["PurpleKonnektiv", "purplekonnektiv"]
     },
   });
 
@@ -19,7 +24,7 @@ export function CalendarFeed() {
     filter: {
       kinds: [31923],
       limit: 20,
-    //   "#t": ["PurpleKonnektiv", "purplekonnektiv"]
+      "#t": ["PurpleKonnektiv", "purplekonnektiv"]
     },
   });
   
@@ -53,9 +58,45 @@ export function CalendarFeed() {
     
     return aValue - bValue
   });
+
+  // Extract and count all tags from events
+  const tagCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    
+    allEvents.forEach(event => {
+      const tTags = event.tags.filter(tag => tag[0] === 't' && tag[1]);
+      tTags.forEach(tag => {
+        const tagValue = tag[1].toLowerCase();
+        counts[tagValue] = (counts[tagValue] || 0) + 1;
+      });
+    });
+    
+    return counts;
+  }, [allEvents]);
+  
+  // Get most used tags (sorted by frequency)
+  const mostUsedTags = useMemo(() => {
+    return Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10) // Limit to top 10 most used tags
+      .map(([tag]) => tag);
+  }, [tagCounts]);
+  
+  // Filter events based on selected tag
+  const filteredEvents = useMemo(() => {
+    if (!selectedTag) return allEvents;
+    
+    return allEvents.filter(event => {
+      const eventTags = event.tags
+        .filter(tag => tag[0] === 't')
+        .map(tag => tag[1]?.toLowerCase());
+      
+      return eventTags.includes(selectedTag.toLowerCase());
+    });
+  }, [allEvents, selectedTag]);
   
   // Filter for upcoming events (start date in the future)
-  const upcomingEvents = allEvents.filter(event => {
+  const upcomingEvents = filteredEvents.filter(event => {
     const startTag = event.tags.find(tag => tag[0] === 'start')
     if (!startTag || !startTag[1]) return false
     
@@ -72,7 +113,7 @@ export function CalendarFeed() {
   });
   
   // Filter for past events
-  const pastEvents = allEvents.filter(event => {
+  const pastEvents = filteredEvents.filter(event => {
     const startTag = event.tags.find(tag => tag[0] === 'start')
     if (!startTag || !startTag[1]) return false
     
@@ -86,8 +127,51 @@ export function CalendarFeed() {
     return startTimestamp <= (Date.now() / 1000)
   });
 
+  // Handle tag selection
+  const handleTagClick = (tag: string) => {
+    if (selectedTag === tag) {
+      setSelectedTag(null); // Clear filter if already selected
+    } else {
+      setSelectedTag(tag); // Set new filter
+    }
+  };
+
   return (
     <div className="space-y-4">
+      {/* Tag filters */}
+      {mostUsedTags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-4">
+          <div className="text-sm text-muted-foreground mr-2 flex items-center">
+            Filter by tag:
+          </div>
+          {mostUsedTags.map(tag => (
+            <Badge
+              key={tag}
+              variant={selectedTag === tag ? "default" : "outline"}
+              className={`cursor-pointer ${
+                selectedTag === tag ? "bg-purple-600" : "hover:bg-purple-100 dark:hover:bg-purple-900/30"
+              }`}
+              onClick={() => handleTagClick(tag)}
+            >
+              #{tag}
+              {selectedTag === tag && (
+                <X className="ml-1 h-3 w-3" />
+              )}
+            </Badge>
+          ))}
+          {selectedTag && (
+            <Badge
+              variant="outline"
+              className="cursor-pointer ml-2 hover:bg-red-100 dark:hover:bg-red-900/30"
+              onClick={() => setSelectedTag(null)}
+            >
+              Clear filter
+              <X className="ml-1 h-3 w-3" />
+            </Badge>
+          )}
+        </div>
+      )}
+
       <Tabs defaultValue="upcoming" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
@@ -103,7 +187,9 @@ export function CalendarFeed() {
             </div>
           ) : (
             <div className="p-8 text-center text-muted-foreground">
-              No upcoming events found.
+              {selectedTag 
+                ? `No upcoming events found with tag #${selectedTag}.` 
+                : "No upcoming events found."}
             </div>
           )}
         </TabsContent>
@@ -117,7 +203,9 @@ export function CalendarFeed() {
             </div>
           ) : (
             <div className="p-8 text-center text-muted-foreground">
-              No past events found.
+              {selectedTag 
+                ? `No past events found with tag #${selectedTag}.` 
+                : "No past events found."}
             </div>
           )}
         </TabsContent>

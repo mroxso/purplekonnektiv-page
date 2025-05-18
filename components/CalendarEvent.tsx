@@ -4,7 +4,7 @@ import { Event as NostrEvent } from "nostr-tools"
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Calendar, Clock, MapPin } from "lucide-react"
+import { Calendar, MapPin, Tag } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useProfile } from "nostr-react"
 
@@ -15,6 +15,7 @@ export function CalendarEvent({ event }: { event: NostrEvent }) {
   const [endDate, setEndDate] = useState<string>("")
   const [location, setLocation] = useState<string>("")
   const [username, setUsername] = useState<string>("")
+  const [tags, setTags] = useState<string[]>([])
 
   const { data: userData } = useProfile({
     pubkey: event.pubkey,
@@ -32,12 +33,18 @@ export function CalendarEvent({ event }: { event: NostrEvent }) {
     const startTag = event.tags.find(tag => tag[0] === 'start')
     const endTag = event.tags.find(tag => tag[0] === 'end')
     const locationTag = event.tags.find(tag => tag[0] === 'location')
+    const tTags = event.tags.filter(tag => tag[0] === 't' && tag[1])
 
     if (titleTag && titleTag.length > 1) {
       setTitle(titleTag[1])
     }
 
     setDescription(event.content)
+
+    // Extract hashtags
+    if (tTags.length > 0) {
+      setTags(tTags.map(tag => tag[1]))
+    }
 
     // Format dates based on kind (31922 for date-based, 31923 for time-based)
     if (startTag && startTag.length > 1) {
@@ -75,6 +82,7 @@ export function CalendarEvent({ event }: { event: NostrEvent }) {
         day: 'numeric'
       })
     } catch (e) {
+      console.error("Error parsing date string:", e)
       return dateStr
     }
   }
@@ -92,6 +100,7 @@ export function CalendarEvent({ event }: { event: NostrEvent }) {
         hour12: false
       })
     } catch (e) {
+      console.error("Error parsing timestamp:", e)
       return String(timestamp)
     }
   }
@@ -123,6 +132,19 @@ export function CalendarEvent({ event }: { event: NostrEvent }) {
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-purple-600" />
               <span className="text-sm">{location}</span>
+            </div>
+          )}
+          
+          {tags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 mt-2">
+              <Tag className="h-4 w-4 text-purple-600" />
+              <div className="flex flex-wrap gap-1">
+                {tags.map((tag, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    #{tag}
+                  </Badge>
+                ))}
+              </div>
             </div>
           )}
         </div>
