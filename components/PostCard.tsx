@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { nip19, Event as NostrEvent } from "nostr-tools"
 import { useProfile } from "nostr-react"
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { getImageUrlFromKind20Event } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
@@ -93,12 +92,10 @@ export function PostCard({ post }: { post: NostrEvent }) {
           <div className={`grid gap-2 ${imageUrls.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} mb-4`}>
             {imageUrls.map((url, index) => (
               <div key={index} className="relative rounded-lg overflow-hidden aspect-video">
-                <Image
+                <img
                   src={url}
                   alt="Post image"
-                  fill
-                  className="object-cover rounded-lg"
-                  sizes="(max-width: 768px) 100vw, 600px"
+                  className="object-cover rounded-lg w-full h-full"
                 />
               </div>
             ))}
@@ -107,11 +104,10 @@ export function PostCard({ post }: { post: NostrEvent }) {
         
         {(post.kind === 20) && (
           <div className="relative rounded-lg overflow-hidden mb-4">
-            <Image
+            <img
               src={getImageUrlFromKind20Event(post.tags)}
               alt="Post image"
-              fill
-              className="w-full object-cover rounded-lg"
+              className="w-full h-full object-cover rounded-lg"
             />
           </div>
         )}
