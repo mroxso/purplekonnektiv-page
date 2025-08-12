@@ -1,6 +1,6 @@
 'use client';
 
-import { Inter } from "next/font/google"
+// import { Inter } from "next/font/google"
 import "@/app/globals.css"
 import Header from "@/components/Header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -11,7 +11,7 @@ const relayUrls = [
   "wss://relay.nostr.band",
 ];
 
-const inter = Inter({ subsets: ["latin"] })
+// const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({
   children,
@@ -24,7 +24,7 @@ export default function RootLayout({
         <title>Purple Konnektiv</title>
         <meta name="description" content="Purple Konnektiv - Connect with the community through Nostr" />
       </head>
-      <body className={inter.className}>
+      <body className="font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
