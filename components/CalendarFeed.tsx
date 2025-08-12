@@ -2,6 +2,7 @@
 
 import { useNostrEvents } from "nostr-react"
 import { CalendarEvent } from "@/components/CalendarEvent"
+import { CreateCalendarEvent } from "@/components/CreateCalendarEvent"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState, useMemo } from "react"
 import { Badge } from "@/components/ui/badge"
@@ -138,6 +139,8 @@ export function CalendarFeed() {
 
   return (
     <div className="space-y-4">
+      {/* Create Event Button */}
+      <CreateCalendarEvent />
       {/* Tag filters */}
       {mostUsedTags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
